@@ -114,6 +114,7 @@ jobs:
         shell: bash
         run: |
           ARGS=("${{ inputs.url }}" "--name" "${{ inputs.name }}")
+          ARGS+=("--inject" "notification-permission.js")
 
           if [ -n "${{ inputs.icon }}" ]; then
             ARGS+=("--icon" "${{ inputs.icon }}")
@@ -168,6 +169,7 @@ jobs:
         shell: pwsh
         run: |
           $args = "${{ inputs.url }}", "--name", "${{ inputs.name }}"
+          $args += "--inject", "notification-permission.js"
 
           if ("${{ inputs.icon }}" -ne "") {
             $args += "--icon", "${{ inputs.icon }}"
