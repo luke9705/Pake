@@ -22,6 +22,9 @@ on:
       name:
         description: "App name (lowercase for Linux)"
         required: true
+      identifier:
+        description: "Application identifier / bundle ID"
+        required: false
       icon:
         description: "Icon URL, auto-fetch if empty"
         required: false
@@ -116,6 +119,10 @@ jobs:
           ARGS=("${{ inputs.url }}" "--name" "${{ inputs.name }}")
           ARGS+=("--inject" "notification-permission.js")
 
+          if [ -n "${{ inputs.identifier }}" ]; then
+            ARGS+=("--identifier" "${{ inputs.identifier }}")
+          fi
+
           if [ -n "${{ inputs.icon }}" ]; then
             ARGS+=("--icon" "${{ inputs.icon }}")
           fi
@@ -170,6 +177,10 @@ jobs:
         run: |
           $args = "${{ inputs.url }}", "--name", "${{ inputs.name }}"
           $args += "--inject", "notification-permission.js"
+
+          if ("${{ inputs.identifier }}" -ne "") {
+            $args += "--identifier", "${{ inputs.identifier }}"
+          }
 
           if ("${{ inputs.icon }}" -ne "") {
             $args += "--icon", "${{ inputs.icon }}"
